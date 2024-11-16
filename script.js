@@ -4,6 +4,7 @@ let newGamebtn = document.querySelector("#new-btn");
 let msgContainer = document.querySelector(".msg-container");
 let msg = document.querySelector("#msg");
 let turnO = true;
+let btnCount = 0;
 
 const winPatterns = [
   [0, 1, 2],
@@ -24,6 +25,7 @@ const resetGame = () => {
 
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
+    btnCount += 1;
     if (turnO) {
       box.innerText = "O";
       turnO = false;
@@ -55,6 +57,12 @@ const showWinner = (winner) => {
   disabledBoxes();
 };
 
+const draw = () => {
+  msg.innerText = `Draw, There's No Winner`;
+  msgContainer.classList.remove("hide");
+  disabledBoxes();
+};
+
 const tie = () => {
   msg.innerText = "Game is Tied";
   msgContainer.classList.remove("hide");
@@ -70,6 +78,8 @@ const checkWinner = () => {
     if (pos1Val != "" && pos2Val != "" && pos3Val != "") {
       if (pos1Val == pos2Val && pos2Val == pos3Val) {
         showWinner(pos1Val);
+      } else if (btnCount == 9) {
+        draw();
       }
     }
   }
