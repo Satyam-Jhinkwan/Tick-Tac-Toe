@@ -19,6 +19,7 @@ const winPatterns = [
 
 const resetGame = () => {
   turnO = true;
+  btnCount = 0;
   enabledBoxes();
   msgContainer.classList.add("hide");
 };
@@ -70,6 +71,7 @@ const tie = () => {
 };
 
 const checkWinner = () => {
+  let winnerDeclared = false;
   for (let pattern of winPatterns) {
     let pos1Val = boxes[pattern[0]].innerText;
     let pos2Val = boxes[pattern[1]].innerText;
@@ -78,11 +80,13 @@ const checkWinner = () => {
     if (pos1Val != "" && pos2Val != "" && pos3Val != "") {
       if (pos1Val == pos2Val && pos2Val == pos3Val) {
         showWinner(pos1Val);
-      }
-      if (btnCount % 9 == 0) {
-        draw();
+        winnerDeclared = true;
+        break;
       }
     }
+  }
+  if (!winnerDeclared && btnCount == 9) {
+    draw();
   }
 };
 
